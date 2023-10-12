@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import registration.RegistrationDAO;
 
 /**
@@ -25,7 +26,7 @@ import registration.RegistrationDAO;
  */
 @WebServlet(name = "StartUpServlet", urlPatterns = {"/StartUpServlet"})
 public class StartUpServlet extends HttpServlet {
-    
+
     private final String LOGIN_PAGE = "login.html";
     private final String SEARCH_PAGE = "search.jsp";
 
@@ -43,21 +44,24 @@ public class StartUpServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = LOGIN_PAGE;
         try {
-            //1. get all cookies
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                //2. get username and password from the newest cookie
-                Cookie newestCookie = cookies[cookies.length - 1];
-                String username = newestCookie.getName();
-                String password = newestCookie.getValue();
-                //3. call DAO
-                //3.1 new DAO
-                RegistrationDAO dao = new RegistrationDAO();
-                //3.2 call method
-                boolean result = dao.checkLogin(username, password);
-                //4. process result
-                if(result) {
-                    url = SEARCH_PAGE;
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                //1. get all cookies
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    //2. get username and password from the newest cookie
+                    Cookie newestCookie = cookies[cookies.length - 1];
+                    String username = newestCookie.getName();
+                    String password = newestCookie.getValue();
+                    //3. call DAO
+                    //3.1 new DAO
+                    RegistrationDAO dao = new RegistrationDAO();
+                    //3.2 call method
+                    boolean result = dao.checkLogin(username, password);
+                    //4. process result
+                    if (result) {
+                        url = SEARCH_PAGE;
+                    }
                 }
             }//end cookies
         } catch (SQLException ex) {
