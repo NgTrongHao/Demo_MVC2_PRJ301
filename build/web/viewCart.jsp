@@ -25,35 +25,49 @@
                     Map<String, Integer> items = cart.getItems();
                     if (items != null) {
         %>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%
-                    int count = 0;
-                    for (String key : items.keySet()) {
-                %>
-                <tr>
-                    <td>
-                        <%= ++count%>
-                    </td>
-                    <td>
-                        <%= key%>
-                    </td>
-                    <td>
-                        <%= items.get(key)%>
-                    </td>
-                </tr>
-                <%
-                    }
-                %>
-            </tbody>
-        </table>
+        <form action="DispatchServlet">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        int count = 0;
+                        for (String key : items.keySet()) {
+                    %>
+                    <tr>
+                        <td>
+                            <%= ++count%>
+                        </td>
+                        <td>
+                            <%= key%>
+                        </td>
+                        <td>
+                            <%= items.get(key)%>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="checkItem" value="<%= key %>" />
+                        </td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                    <tr>
+                        <td colspan="3">
+                            <a href="bookStore.html">Add more books to Your Cart</a>
+                        </td>
+                        <td>
+                            <input type="submit" value="Remove Selected Items" name="btAction" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
         <%
                         return;
                     }//end items have existed

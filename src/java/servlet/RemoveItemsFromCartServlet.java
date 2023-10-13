@@ -5,33 +5,23 @@
  */
 package servlet;
 
+import cart.CartObject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ngtronghao <ngtronghao02@gmail.com>
  */
-@WebServlet(name = "DispatchServlet", urlPatterns = {"/DispatchServlet"})
-public class DispatchServlet extends HttpServlet {
-
-    private final String LOGIN_PAGE = "login.html";
-//    private final String LOGIN_CONTROLLER = "search.html";
-    private final String LOGIN_CONTROLLER = "LoginServlet";
-    private final String SEARCH_LASTNAME_CONTROLLER = "SearchLastNameServlet";
-    private final String DELETE_ACCOUNT_CONTROLLER = "DeleteAccountServlet";
-    private final String UPDATE_ACCOUNT_CONTROLLER = "UpdateAccountServlet";
-    private final String START_UP_CONTROLLER = "StartUpServlet";
-    private final String ADD_ITEM_TO_CART_CONTROLLER = "AddItemToCartServlet";
-    private final String LOGOUT_CONTROLLER = "LogOutServlet";
-    private final String VIEW_CART_PAGE = "viewCart.jsp";
-    private final String REMOVE_ITEMS_FROM_CART_CONTROLLER = "RemoveItemsFromCartServlet";
+@WebServlet(name = "RemoveItemsFromCartServlet", urlPatterns = {"/RemoveItemsFromCartServlet"})
+public class RemoveItemsFromCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,32 +35,32 @@ public class DispatchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //1. Which button did user click?
-        String button = request.getParameter("btAction");
-        String url = LOGIN_PAGE;
         try {
-            if (button == null) { //welcome file trigger
-                url = START_UP_CONTROLLER;
-            } else if (button.equals("Login")) {
-                url = LOGIN_CONTROLLER;
-            } else if (button.equals("Search")) {
-                url = SEARCH_LASTNAME_CONTROLLER;
-            } else if (button.equals("delete")) {
-                url = DELETE_ACCOUNT_CONTROLLER;
-            } else if (button.equals("Update")) {
-                url = UPDATE_ACCOUNT_CONTROLLER;
-            } else if (button.equals("Add Book to Your Cart")) {
-                url = ADD_ITEM_TO_CART_CONTROLLER;
-            } else if (button.equals("LogOut")) {
-                url = LOGOUT_CONTROLLER;
-            } else if (button.equals("View Your Cart")) {
-                url = VIEW_CART_PAGE;
-            } else if (button.equals("Remove Selected Items")) {
-                url = REMOVE_ITEMS_FROM_CART_CONTROLLER;
-            }
+            //1. Customer goes to the cart place
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                //2. Customer take his/her cart
+                CartObject cart = (CartObject) session.getAttribute("CART");
+                if (cart != null) {
+                    //3. Customer gets items
+                    Map<String, Integer> items = cart.getItems();
+                    if (items != null) {
+                        //4. Customer choose all removing items
+                        String[] selectedItems = request.getParameterValues("checkItem");
+                        if (selectedItems != null) {
+                            for (String selectedItem : selectedItems) {
+                                cart.removeItemFromCart(selectedItem);
+                            }
+                            session.setAttribute("CART", cart);
+                        }//customer must be chosen
+                    }//end items have existed
+                }//end cart has existed
+            }//end cart place must exist
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            //6. refresh --> call previous function again (View Your Cart) --> using urlRewriting
+            String urlRewriting = "DispatchServlet"
+                    + "?btAction=View Your Cart";
+            response.sendRedirect(urlRewriting);
         }
     }
 
