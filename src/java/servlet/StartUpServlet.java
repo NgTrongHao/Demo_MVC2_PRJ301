@@ -50,7 +50,7 @@ public class StartUpServlet extends HttpServlet {
                 Cookie[] cookies = request.getCookies();
                 if (cookies != null) {
                     //2. get username and password from the newest cookie
-                    Cookie newestCookie = cookies[cookies.length - 1];
+                    Cookie newestCookie = cookies[cookies.length - 1];  //cách này dùng để test với riêng chương trình này khi cookie chỉ dành cho việc check login, trong các trường hợp khác nên sử dụng dòng for để lấy và check
                     String username = newestCookie.getName();
                     String password = newestCookie.getValue();
                     //3. call DAO
