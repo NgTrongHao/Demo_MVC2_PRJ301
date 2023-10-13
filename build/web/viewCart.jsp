@@ -51,7 +51,7 @@
                             <%= items.get(key)%>
                         </td>
                         <td>
-                            <input type="checkbox" name="checkItem" value="<%= key %>" />
+                            <input type="checkbox" name="checkItem" value="<%= key%>" />
                         </td>
                     </tr>
                     <%
@@ -67,6 +67,7 @@
                     </tr>
                 </tbody>
             </table>
+            <input type="submit" value="Check-out" name="btAction" />
         </form>
         <%
                         return;
