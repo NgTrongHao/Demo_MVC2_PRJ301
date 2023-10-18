@@ -59,7 +59,7 @@
                     %>
                     <tr>
                         <td colspan="3">
-                            <a href="bookStore.html">Add more books to Your Cart</a>
+                            <a href="bookStore.jsp">Add more books to Your Cart</a>
                         </td>
                         <td>
                             <input type="submit" value="Remove Selected Items" name="btAction" />

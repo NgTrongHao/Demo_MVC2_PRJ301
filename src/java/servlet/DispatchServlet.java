@@ -34,6 +34,7 @@ public class DispatchServlet extends HttpServlet {
     private final String REMOVE_ITEMS_FROM_CART_CONTROLLER = "RemoveItemsFromCartServlet";
     private final String CHECK_OUT_CART_CONTROLLER = "CheckOutServlet";
     private final String CREATE_ACCOUNT_CONTROLLER = "CreateAccountServlet";
+    private final String BOOK_STORE_CONTROLLER = "BookStoreServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -73,6 +74,8 @@ public class DispatchServlet extends HttpServlet {
                 url = CHECK_OUT_CART_CONTROLLER;
             } else if (button.equals("Create New Account")) {
                 url = CREATE_ACCOUNT_CONTROLLER;
+            } else if (button.equals("bookStore")) {
+                url = BOOK_STORE_CONTROLLER;
             }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
