@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class ProductCart {
 
-    Map<String, ProductDTO> products = new HashMap<>();
+    Map<String, ProductDTO> products;
 
     public ProductCart() {
     }
@@ -24,6 +24,9 @@ public class ProductCart {
     }
 
     public void addProduct(String productID, ProductDTO dto) {
+        if (this.products == null) {
+            products = new HashMap<>();
+        }
         products.put(productID, dto);
     }
 }
