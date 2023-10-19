@@ -63,10 +63,11 @@ public class AddItemToCartServlet extends HttpServlet {
                 if (products != null) {
                     ProductDTO item = products.getProduct(itemName);
                     if (item != null && item.getQuantity() > quantity) {
-                        boolean result = dao.decreaseProductQuantityByAddToCart(item.getProductID(), quantity);
-                        if (result) {
-                            cart.addItemToCart(itemName, quantity);
-                        }
+                        cart.addItemToCart(itemName, quantity);
+//                        boolean result = dao.decreaseProductQuantityByAddToCart(item.getProductID(), quantity);
+//                        if (result) {
+//                            cart.addItemToCart(itemName, quantity);
+//                        }
                     }
                 }
             }
