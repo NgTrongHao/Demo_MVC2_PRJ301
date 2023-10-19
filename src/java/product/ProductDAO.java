@@ -54,7 +54,7 @@ public class ProductDAO implements Serializable {
                     ProductDTO dto = new ProductDTO(productID, name, quantity, unitPrice, status);
                     //5.3 add dto into List
                     if (this.products == null) {
-                        products = new ProductCart();
+                        this.products = new ProductCart();
                     }
                     this.products.addProduct(productID, dto);
                 }
@@ -71,5 +71,36 @@ public class ProductDAO implements Serializable {
             }
         }
         return products;
+    }
+
+    public boolean decreaseProductQuantityByAddToCart(String productID, int quantity)
+            throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+
+        try {
+            con = DBHelper.createConnection();
+            if (con != null) {
+                String sql = "UPDATE Product "
+                        + "SET quantity = ? "
+                        + "WHERE productID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, this.products.getProductByID(productID).getQuantity() - quantity);
+                stm.setString(2, productID);
+                int effectiveRows = stm.executeUpdate();
+                if (effectiveRows > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
     }
 }

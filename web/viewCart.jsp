@@ -76,5 +76,6 @@
             }//cart place must be existed
         %>
         <h2>No cart is existed</h2>
+        <a href="DispatchServlet?btAction=bookStore"></a>
     </body>
 </html>

@@ -25,8 +25,22 @@ public class ProductCart {
 
     public void addProduct(String productID, ProductDTO dto) {
         if (this.products == null) {
-            products = new HashMap<>();
+            this.products = new HashMap<>();
         }
-        products.put(productID, dto);
+        this.products.put(productID, dto);
+    }
+
+    public ProductDTO getProduct(String productName) {
+        ProductDTO dto = null;
+        for (ProductDTO product : products.values()) {
+            if (product.getName().equals(productName)) {
+                dto = product;
+            }
+        }
+        return dto;
+    }
+
+    public ProductDTO getProductByID(String productID) {
+        return products.get(productID);
     }
 }

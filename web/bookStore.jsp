@@ -44,7 +44,6 @@
             Choose your book <select name="ddlBook">
                 <%
                     for (ProductDTO product : items.values()) {
-                        System.out.println(product.getName());
                 %>
                 <option><%= product.getName()%></option>
                 <%

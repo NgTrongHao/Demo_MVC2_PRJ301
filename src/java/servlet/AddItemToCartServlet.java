@@ -8,12 +8,19 @@ package servlet;
 import cart.CartObject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import product.ProductCart;
+import product.ProductDAO;
+import product.ProductDTO;
 
 /**
  *
@@ -21,7 +28,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "AddItemToCartServlet", urlPatterns = {"/AddItemToCartServlet"})
 public class AddItemToCartServlet extends HttpServlet {
-    
+
     private final String BOOKSTORE_PAGE = "bookStore.jsp";
 
     /**
@@ -41,21 +48,37 @@ public class AddItemToCartServlet extends HttpServlet {
             //1. get cart
             HttpSession session = request.getSession(); //default la true
             //2. take cart
-            CartObject cart = (CartObject)session.getAttribute("CART");
-            if(cart == null) {
+            CartObject cart = (CartObject) session.getAttribute("CART");
+            if (cart == null) {
                 cart = new CartObject();
             }//cart has initialized
             //3. drop item to cart
-            String itemId = request.getParameter("ddlBook");
+            String itemName = request.getParameter("ddlBook");
             String quantityRequest = request.getParameter("bookQuantity");
-            if(!quantityRequest.trim().isEmpty()) {
+            if (!quantityRequest.trim().isEmpty()) {
                 int quantity = Integer.parseInt(quantityRequest);
-                cart.addItemToCart(itemId, quantity);
-                System.out.println("Added " + quantity + " " + itemId + " to cart successfully!");
+                ProductDAO dao = new ProductDAO();
+                ProductCart products = dao.getProducts();
+                System.out.println("test for product");
+                if (products != null) {
+                    ProductDTO item = products.getProduct(itemName);
+                    if (item != null && item.getQuantity() > quantity) {
+                        boolean result = dao.decreaseProductQuantityByAddToCart(item.getProductID(), quantity);
+                        if (result) {
+                            cart.addItemToCart(itemName, quantity);
+                        }
+                    }
+                }
             }
             session.setAttribute("CART", cart);
             //4. continue shopping by returning bookStore.html
-            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
         } finally {
             response.sendRedirect(url);
         }
