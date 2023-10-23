@@ -3,14 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/AddItemToCartServlet.java</file>
-            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/product/ProductCart.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/order/OrderDAO.java</file>
             <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/DispatchServlet.java</file>
-            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/BookStoreServlet.java</file>
-            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/product/ProductDAO.java</file>
-            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/web/viewCart.jsp</file>
-            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/web/bookStore.jsp</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/StartUpServlet.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/LoginServlet.java</file>
             <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/registration/RegistrationDAO.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/web/search.jsp</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/registration/RegistrationDTO.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/CheckOutServlet.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/SearchLastNameServlet.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/DeleteAccountServlet.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/orderDetail/OrderDetailDAO.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/product/ProductDAO.java</file>
+            <file>file:/D:/Semester%204/PRJ/Code/Demo_MVC2/src/java/servlet/UpdateAccountServlet.java</file>
         </group>
     </open-files>
 </project-private>

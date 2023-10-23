@@ -18,7 +18,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import registration.RegistrationDAO;
+import registration.RegistrationDTO;
 import util.DBHelper;
 
 /**
@@ -95,7 +97,6 @@ public class LoginServlet extends HttpServlet {
 //            rd.forward(request, response);
 //            out.close();
 //        }
-
         //1.get all parameters
         String url = INVALID_PAGE;
         String username = request.getParameter("userName");
@@ -106,13 +107,17 @@ public class LoginServlet extends HttpServlet {
             //  2.1 new DAO object
             RegistrationDAO dao = new RegistrationDAO();
             //  2.2 call method of DAO
-            boolean result = dao.checkLogin(username, password);
+//            boolean result = dao.checkLogin(username, password);
+            RegistrationDTO result = dao.checkLogin(username, password);
             //3. process result
-            if (result) {
+            if (result != null) {
                 url = SEARCH_PAGE;
-                Cookie cookie = new Cookie(username, password);
-                cookie.setMaxAge(60 * 10);
-                response.addCookie(cookie);
+//                Cookie cookie = new Cookie(username, password);
+//                cookie.setMaxAge(60 * 10);
+//                response.addCookie(cookie);
+                HttpSession session = request.getSession(); //login thanh cong phai tao session
+                session.setAttribute("USER_INFO", result);
+
             }
             //end username and password are verified
 

@@ -18,9 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import product.ProductCart;
-import product.ProductDAO;
-import product.ProductDTO;
 
 /**
  *
@@ -53,33 +50,14 @@ public class AddItemToCartServlet extends HttpServlet {
                 cart = new CartObject();
             }//cart has initialized
             //3. drop item to cart
-            String itemName = request.getParameter("ddlBook");
+            String itemID = request.getParameter("ddlBook");
             String quantityRequest = request.getParameter("bookQuantity");
             if (!quantityRequest.trim().isEmpty()) {
                 int quantity = Integer.parseInt(quantityRequest);
-                ProductDAO dao = new ProductDAO();
-                ProductCart products = dao.getProducts();
-                System.out.println("test for product");
-                if (products != null) {
-                    ProductDTO item = products.getProduct(itemName);
-                    if (item != null && item.getQuantity() > quantity) {
-                        cart.addItemToCart(itemName, quantity);
-//                        boolean result = dao.decreaseProductQuantityByAddToCart(item.getProductID(), quantity);
-//                        if (result) {
-//                            cart.addItemToCart(itemName, quantity);
-//                        }
-                    }
-                }
+                cart.addItemToCart(itemID, quantity);
             }
             session.setAttribute("CART", cart);
             //4. continue shopping by returning bookStore.html
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (NamingException ex) {
-            ex.printStackTrace();
         } finally {
             response.sendRedirect(url);
         }

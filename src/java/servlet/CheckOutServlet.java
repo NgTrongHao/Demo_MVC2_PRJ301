@@ -8,13 +8,21 @@ package servlet;
 import cart.CartObject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import order.OrderDAO;
+import orderDetail.OrderDetailDAO;
+import product.ProductDTO;
 
 /**
  *
@@ -45,10 +53,47 @@ public class CheckOutServlet extends HttpServlet {
                 //2. Customer get his/her cart
                 CartObject cart = (CartObject) session.getAttribute("CART");
                 if (cart != null) {
+//                    Map<String, Integer> items = cart.getItems();
+//                    items.clear();
+                    //3. Customer gets all item
                     Map<String, Integer> items = cart.getItems();
-                    items.clear();
+                    if (items != null) {
+                        List<ProductDTO> products = (List<ProductDTO>) session.getAttribute("STORE");
+                        if (products != null) {
+                            OrderDAO orderDAO = new OrderDAO();
+                            String orderID = orderDAO.createOrderID();
+                            boolean createOrderResult = orderDAO.insertOrder(orderID);
+                            System.out.println(createOrderResult);
+                            if (createOrderResult) {
+                                OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+                                int count = 0;
+                                for (String key : items.keySet()) {
+                                    ++count;
+                                    for (ProductDTO product : products) {
+                                        String productID = product.getProductID();
+                                        System.out.println(key + " : " + productID);
+                                        if (key.equals(product.getProductName())) {
+                                            System.out.println(productID + items.get(key) + orderID);
+                                            boolean insertOrderDetail
+                                                    = orderDetailDAO.insertOrderDetail(count, productID, items.get(key), orderID);
+//                                            if (insertOrderDetail) {
+//                                                items.remove(key);
+//                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+                session.setAttribute("CART", cart);
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
         } finally {
             response.sendRedirect(url);
         }

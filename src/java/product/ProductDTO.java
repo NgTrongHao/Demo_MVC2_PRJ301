@@ -6,7 +6,6 @@
 package product;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  *
@@ -15,7 +14,7 @@ import java.util.Map;
 public class ProductDTO implements Serializable {
 
     private String productID;
-    private String name;
+    private String productName;
     private int quantity;
     private float unitPrice;
     private boolean status;
@@ -23,9 +22,9 @@ public class ProductDTO implements Serializable {
     public ProductDTO() {
     }
 
-    public ProductDTO(String productID, String name, int quantity, float unitPrice, boolean status) {
+    public ProductDTO(String productID, String productName, int quantity, float unitPrice, boolean status) {
         this.productID = productID;
-        this.name = name;
+        this.productName = productName;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.status = status;
@@ -39,12 +38,12 @@ public class ProductDTO implements Serializable {
         this.productID = productID;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getQuantity() {
@@ -70,4 +69,5 @@ public class ProductDTO implements Serializable {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
 }

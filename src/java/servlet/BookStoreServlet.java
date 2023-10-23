@@ -8,19 +8,17 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import product.ProductCart;
 import product.ProductDAO;
 import product.ProductDTO;
 
@@ -47,10 +45,11 @@ public class BookStoreServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = BOOK_STORE_PAGE;
         try {
-            HttpSession session = request.getSession(true);
+            HttpSession session = request.getSession();
             ProductDAO dao = new ProductDAO();
-            ProductCart products = dao.getProducts();
-            session.setAttribute("PRODUCTS", products);
+            dao.loadProducts();
+            List<ProductDTO> products = dao.getProducts();
+            session.setAttribute("STORE", products);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
@@ -58,7 +57,8 @@ public class BookStoreServlet extends HttpServlet {
         } catch (NamingException ex) {
             ex.printStackTrace();
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

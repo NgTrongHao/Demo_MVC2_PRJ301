@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import registration.RegistrationDAO;
+import registration.RegistrationDTO;
 
 /**
  *
@@ -57,9 +58,10 @@ public class StartUpServlet extends HttpServlet {
                     //3.1 new DAO
                     RegistrationDAO dao = new RegistrationDAO();
                     //3.2 call method
-                    boolean result = dao.checkLogin(username, password);
+//                    boolean result = dao.checkLogin(username, password);
+                    RegistrationDTO result = dao.checkLogin(username, password);
                     //4. process result
-                    if (result) {
+                    if (result != null) {
                         url = SEARCH_PAGE;
                     }
                 }

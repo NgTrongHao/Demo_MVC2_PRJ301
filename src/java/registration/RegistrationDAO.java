@@ -21,19 +21,22 @@ import util.DBHelper;
  */
 public class RegistrationDAO implements Serializable {
 
-    public boolean checkLogin(String username, String password)
+//    public boolean checkLogin(String username, String password)
+//            throws SQLException, ClassNotFoundException, NamingException {
+    public RegistrationDTO checkLogin(String username, String password)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        boolean result = false;
+//        boolean result = false;
+        RegistrationDTO result = null;
 
         try {
             //1.Create Connection
             con = DBHelper.createConnection();
             if (con != null) {
                 //2.Create SQL String
-                String sql = "SELECT username "
+                String sql = "SELECT lastName, isAdmin "
                         + "FROM Registration "
                         + "WHERE username = ? "
                         + "AND password = ?";
@@ -45,7 +48,12 @@ public class RegistrationDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5.Process
                 if (rs.next()) {
-                    result = true;
+                    //mapping
+                    //5.1 get data from result set
+                    String fullName = rs.getString("lastName");
+                    boolean role = rs.getBoolean("isAdmin");
+                    //5.2 set data to DTO
+                    result = new RegistrationDTO(username, null, fullName, role);   //business kkong luu password user
                 }//end username and password are existed
             }//end connection is available
         } finally {
