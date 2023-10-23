@@ -31,11 +31,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${items}" var="item" varStatus="counter">
+                            <c:forEach items="${items}" var="entry" varStatus="counter">
                                 <tr>
                                     <td>${counter.count}</td>
-                                    <td>${item.key}</td>
-                                    <td>${item}</td>
+                                    <td>${entry.key}</td>
+                                    <td>${entry.value}</td>
                                     <td>
                                         <input type="checkbox" name="checkItem" value="${item.key}" />
                                     </td>

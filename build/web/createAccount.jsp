@@ -16,7 +16,7 @@
         <form action="DispatchServlet" method="POST">
             Username * <input type="text" name="txtUsername" value="" />(6 - 30 chars)<br/>
             Password * <input type="password" name="txtPassword" value="" />(6 - 20 chars)<br/>
-            Password * <input type="password" name="txtConfirm" value="" />(6 - 20 chars)
+            Password * <input type="password" name="txtConfirm" value="" />(6 - 20 chars)<br/>
             Full name * <input type="text" name="txtFullName" value="" />(6 - 50 chars)<br/>
             <input type="submit" value="Create New Account" name="btAction" />
             <input type="reset" value="Reset" />
