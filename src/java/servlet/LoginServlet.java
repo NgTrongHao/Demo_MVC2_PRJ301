@@ -9,10 +9,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -97,6 +99,9 @@ public class LoginServlet extends HttpServlet {
 //            rd.forward(request, response);
 //            out.close();
 //        }
+        //0. get current context
+        ServletContext context = this.getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         //1.get all parameters
         String url = INVALID_PAGE;
         String username = request.getParameter("userName");
