@@ -214,7 +214,7 @@ public class RegistrationDAO implements Serializable {
                         + ")";
                 //3. Create StatementObject
                 stm = con.prepareStatement(sql);
-                stm.setString(1, account.getFullName());
+                stm.setString(1, account.getUsername());
                 stm.setString(2, account.getPassword());
                 stm.setString(3, account.getFullName());
                 stm.setBoolean(4, account.isRole());

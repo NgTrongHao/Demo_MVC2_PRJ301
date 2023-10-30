@@ -22,6 +22,7 @@
         <form action="DispatchServlet">
             Search Value <input type="text" name="txtSearchValue" value="${param.txtSearchValue}" /><br/>
             <input type="submit" value="Search" name="btAction" />
+            <input type="submit" value="LogOut" name="btAction" />
         </form><br/>
         <c:set var="searchValue" value="${param.txtSearchValue}"/>
         <c:if test="${not empty searchValue}">
@@ -73,6 +74,8 @@
                                     <a href="${urlRewriting}">Delete</a>
                                 </td>
                                 <td>
+                                    <input type="hidden" name="lastSearchValue" 
+                                           value="${searchValue}" />
                                     <input type="submit" value="Update" name="btAction" />
                                 </td>
                             </tr>
